@@ -1,0 +1,13 @@
+﻿.navbar {
+  background-image: url(../assets/Server.jpg);
+  background-size: cover;
+  height: 200px;
+}
+.navbar-brand-container .brand {
+  color: white;
+  font-weight: 500;
+  letter-spacing: 1px;
+  margin-top: 1rem;
+  
+
+}

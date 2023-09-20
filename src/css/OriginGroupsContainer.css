@@ -1,0 +1,40 @@
+/* "origin Groups" title */
+#span-title {
+  font-size: 1.1em;
+  letter-spacing: 0.6px;
+  color: rgb(66, 39, 165);
+  font-weight: bold;
+}
+/* Container holding all content */
+.origin-groups-container {
+  width: 100%;
+  height: 80vh;
+  margin-top: 0.5rem;
+  outline: 1px solid black;
+  border-radius: 5px;
+  overflow: auto;
+}
+
+
+/*scrollbar */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: #999696;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #161515;
+}
+/* == */
+
+
+/* Checkbox's */
+input.checkbox {
+  width: 18px;
+  height: 18px;
+}
+
