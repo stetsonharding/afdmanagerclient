@@ -21,7 +21,7 @@ function OriginGroupsContainer() {
   const [filteredHostNames, setFilteredHostNames] = useState([]);
   //Checking / Unchecking checkbox for table header **Need better solution?**
   const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
-    //State to store ID of regional button clicked
+  //State to store ID of regional button clicked
   const [regionalBtnID, setRegionalBtnID] = useState(null);
 
   const getOriginGroupNames = async () => {
@@ -31,17 +31,22 @@ function OriginGroupsContainer() {
     setHostNameData([]);
     setRegionalBtnID(null)
     try {
+
+      const options = {
+        headers: {
+          "X-Mockery": '{"apiKey": "c18f4249-a3f6-48cc-a1d2-7bdce0320ec5", "environment": "Production", "endpoints": [{ "method": "GET", "endpoint": "https://azuremanagementfd-app.purplefield-1a80c4e1.westus3.azurecontainerapps.io/afd/origingroups"}], "tag": ""}',
+        }
+      };
+
       // Fetching all Origin Group Names.
-      const promise = await fetch("https://localhost:44455/afd/origingroups");
+      const promise = await fetch("https://azuremanagementfd-app.purplefield-1a80c4e1.westus3.azurecontainerapps.io/afd/origingroups", options);
       const originName = await promise.json();
 
       // Iterating through each Origin Group Name and fetching each individual Origin Group
       // and storing it in state.
       originName.map(async (name) => {
         try {
-          const response = await fetch(
-            `https://localhost:44455/afd/origingroup/${name}`
-          );
+          const response = await fetch(`https://azuremanagementfd-app.purplefield-1a80c4e1.westus3.azurecontainerapps.io/afd/origingroups/${name}`, options);
           const hostName = await response.json();
 
           // Add 'isChecked' property and an ID to every object in the 'origins' array
@@ -120,8 +125,8 @@ function OriginGroupsContainer() {
         {/* If there are no filtered origin groups then render all origin groups */}
         <table style={{ width: "100%" }}>
           <tbody>
-            <tr style={{backgroundColor: 'lightgrey', position: 'sticky', top: '0', borderRadius: '5px'}}>
-              <th style={{width: "180px", border: '1px solid black', padding: '.5rem'}}>
+            <tr style={{ backgroundColor: 'lightgrey', position: 'sticky', top: '0', borderRadius: '5px' }}>
+              <th style={{ width: "180px", border: '1px solid black', padding: '.5rem' }}>
                 <input
                   type="checkbox"
                   disabled={isDisabled}
@@ -130,38 +135,38 @@ function OriginGroupsContainer() {
                   class='checkbox'
                 />
               </th>
-              <th style={{border: '1px solid black'}}>ORIGINS</th>
-              <th style={{textAlign: 'center', border: '1px solid black', width: "220px"}}>STATE</th>
+              <th style={{ border: '1px solid black' }}>ORIGINS</th>
+              <th style={{ textAlign: 'center', border: '1px solid black', width: "220px" }}>STATE</th>
             </tr>
 
             {!filteredHostNames.length
               ? hostNameData &&
-                hostNameData.map((origin) => {
-                  return (
-                    <OriginGroupHostName
-                      key={origin.name}
-                      originName={origin.name}
-                      originHostNames={origin.origins}
-                      isDisabled={isDisabled}
-                      isChecked={origin.isChecked}
-                      filteredHostNames={filteredHostNames}
-                      setFilteredHostNames={setFilteredHostNames}
-                    />
-                  );
-                })
+              hostNameData.map((origin) => {
+                return (
+                  <OriginGroupHostName
+                    key={origin.name}
+                    originName={origin.name}
+                    originHostNames={origin.origins}
+                    isDisabled={isDisabled}
+                    isChecked={origin.isChecked}
+                    filteredHostNames={filteredHostNames}
+                    setFilteredHostNames={setFilteredHostNames}
+                  />
+                );
+              })
               : //Rendering filtered origin groups
-                filteredHostNames.map((origin, index) => {
-                  return (
-                    <OriginGroupHostName
-                      key={origin.name}
-                      originName={origin.name}
-                      originHostNames={origin.origins}
-                      setFilteredHostNames={setFilteredHostNames}
-                      filteredHostNames={filteredHostNames}
-                      isDisabled={isDisabled}
-                    />
-                  );
-                })}
+              filteredHostNames.map((origin, index) => {
+                return (
+                  <OriginGroupHostName
+                    key={origin.name}
+                    originName={origin.name}
+                    originHostNames={origin.origins}
+                    setFilteredHostNames={setFilteredHostNames}
+                    filteredHostNames={filteredHostNames}
+                    isDisabled={isDisabled}
+                  />
+                );
+              })}
           </tbody>
         </table>
       </div>
@@ -171,7 +176,7 @@ function OriginGroupsContainer() {
         filteredHostNames={filteredHostNames}
         setFilteredHostNames={setFilteredHostNames}
         setIsDisabled={setIsDisabled}
-   
+
       />
     </Container>
   );
