@@ -78,7 +78,7 @@ function EnabledStateChangeButton({ setEnabledStateChanges, filteredHostNames, i
 
     try {
       var response = await fetch(
-        "https://azuremanagementfd-app.purplefield-1a80c4e1.westus3.azurecontainerapps.io/afd/origingroups",
+        "https://azuremanagementfd-staging--wtrccu5.happyflower-541968ec.westus3.azurecontainerapps.io/afd/origingroups",
         options
       );
 
