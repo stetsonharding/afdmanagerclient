@@ -9,6 +9,7 @@ import EnabledStateChangeButton from "./EnabledStateChangeButton";
 import OriginGroupHostName from "./OriginGroupHostName";
 import Loader from "./Loader";
 
+
 function OriginGroupsContainer() {
   //state for origin names, hostNames, and enabled state.
   const [hostNameData, setHostNameData] = useState([]);
@@ -27,6 +28,8 @@ function OriginGroupsContainer() {
   //Loading state to show loader while getting data
   const [loading, setLoading] = useState(false);
 
+
+
   const getOriginGroupNames = async () => {
     //Unchecking table header checkbox
     //clearing out hostNameData to store new data
@@ -38,26 +41,20 @@ function OriginGroupsContainer() {
       const options = {
         headers: {
           "X-Mockery":
-            '{"apiKey": "c18f4249-a3f6-48cc-a1d2-7bdce0320ec5", "environment": "Production", "endpoints": [{ "method": "GET", "endpoint": "https://azuremanagementfd-staging--wtrccu5.happyflower-541968ec.westus3.azurecontainerapps.io/afd/origingroups"}], "tag": ""}',
+            '{"apiKey": "a982c2d3-634c-483a-aa99-1ab3620563d1", "environment": "Production", "endpoints": [{ "method": "GET", "endpoint": "http://azuremanagementfd-staging.happyflower-541968ec.westus3.azurecontainerapps.io/afd/origingroups"}], "tag": "v1"}'
         },
       };
       //Set loader to true until data is fetched or an error has occured
       setLoading(true);
       // Fetching all Origin Group Names.
-      const promise = await fetch(
-        "https://azuremanagementfd-staging--wtrccu5.happyflower-541968ec.westus3.azurecontainerapps.io/afd/origingroups",
-        options
-      );
+      const promise = await fetch("/afd/origingroups", options);
       const originName = await promise.json();
 
       // Iterating through each Origin Group Name and fetching each individual Origin Group
       // and storing it in state.
       originName.map(async (name) => {
         try {
-          const response = await fetch(
-            `https://azuremanagementfd-staging--wtrccu5.happyflower-541968ec.westus3.azurecontainerapps.io/afd/origingroups/${name}`,
-            options
-          );
+          const response = await fetch(`/afd/origingroups/${name}`, options);
           const hostName = await response.json();
 
           // Add 'isChecked' property and an ID to every object in the 'origins' array
@@ -131,11 +128,15 @@ function OriginGroupsContainer() {
         regionalBtnID={regionalBtnID}
         setRegionalBtnID={setRegionalBtnID}
         handleReadOnlyClick={handleReadOnlyClick}
-        />
+      />
       <span id="span-title">Origin Groups</span>
       <div style={{ textAlign: "center" }}>
         {/* Display error to user */}
-        {error && <p><b>{error}!</b></p>}
+        {error && (
+          <p>
+            <b>{error}!</b>
+          </p>
+        )}
         {/*Display Loader */}
         <Loader loading={loading} />
       </div>
@@ -163,7 +164,7 @@ function OriginGroupsContainer() {
                   disabled={isDisabled}
                   onClick={(e) => toggleCheckBoxes(e)}
                   checked={isCheckboxChecked}
-                  class="checkbox"
+                  className="checkbox"
                 />
               </th>
               <th style={{ border: "1px solid black" }}>ORIGINS</th>
