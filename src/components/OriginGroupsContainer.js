@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "../css/OriginGroupsContainer.css";
-
 import { Container } from "reactstrap";
 
 //Components
@@ -41,7 +40,7 @@ function OriginGroupsContainer() {
       const options = {
         headers: {
           "X-Mockery":
-            '{"apiKey": "a982c2d3-634c-483a-aa99-1ab3620563d1", "environment": "Production", "endpoints": [{ "method": "GET", "endpoint": "http://azuremanagementfd-staging.happyflower-541968ec.westus3.azurecontainerapps.io/afd/origingroups"}], "tag": "v1"}'
+            `{"apiKey": "${process.env.REACT_APP_MOCKERY_APIKEY}", "environment": "${process.env.REACT_APP_MOCKERY_ENVIRONMENT}", "endpoints": [{"useHandler": true, "method": "GET", "endpoint": "/azure/origingroups", "tag": "v1"}]}`
         },
       };
       //Set loader to true until data is fetched or an error has occured
@@ -180,32 +179,32 @@ function OriginGroupsContainer() {
             </tr>
             {!filteredHostNames.length
               ? hostNameData &&
-                hostNameData.map((origin) => {
-                  return (
-                    <OriginGroupHostName
-                      key={origin.name}
-                      originName={origin.name}
-                      originHostNames={origin.origins}
-                      isDisabled={isDisabled}
-                      isChecked={origin.isChecked}
-                      filteredHostNames={filteredHostNames}
-                      setFilteredHostNames={setFilteredHostNames}
-                    />
-                  );
-                })
+              hostNameData.map((origin) => {
+                return (
+                  <OriginGroupHostName
+                    key={origin.name}
+                    originName={origin.name}
+                    originHostNames={origin.origins}
+                    isDisabled={isDisabled}
+                    isChecked={origin.isChecked}
+                    filteredHostNames={filteredHostNames}
+                    setFilteredHostNames={setFilteredHostNames}
+                  />
+                );
+              })
               : //Rendering filtered origin groups
-                filteredHostNames.map((origin, index) => {
-                  return (
-                    <OriginGroupHostName
-                      key={origin.name}
-                      originName={origin.name}
-                      originHostNames={origin.origins}
-                      setFilteredHostNames={setFilteredHostNames}
-                      filteredHostNames={filteredHostNames}
-                      isDisabled={isDisabled}
-                    />
-                  );
-                })}
+              filteredHostNames.map((origin, index) => {
+                return (
+                  <OriginGroupHostName
+                    key={origin.name}
+                    originName={origin.name}
+                    originHostNames={origin.origins}
+                    setFilteredHostNames={setFilteredHostNames}
+                    filteredHostNames={filteredHostNames}
+                    isDisabled={isDisabled}
+                  />
+                );
+              })}
           </tbody>
           {/* <Loader loading={loading}/> */}
         </table>

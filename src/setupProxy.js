@@ -1,12 +1,12 @@
 const { createProxyMiddleware } = require('http-proxy-middleware');
 
- 
+
 
 module.exports = function (app) {
   app.use(
     '/afd',
     createProxyMiddleware({
-      target: 'https://azuremanagementfd-staging.happyflower-541968ec.westus3.azurecontainerapps.io',
+      target: process.env.REACT_APP_AFD_MANAGER_CLIENT_API_BASE_URL,
       changeOrigin: true,
     })
   );
